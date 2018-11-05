@@ -13,11 +13,12 @@ class App extends Component {
 
       // Defining what the state of the app will be
       this.state = {
+        searchResult: [],
         pet: '-',
         randomCat: '-',
         randomDog: '-',
         breeds: [],
-        searchData: {
+        SearchData: {
           animal: "dog",
           breed: "Yorkshire Terrier",
           size: "M",
@@ -35,7 +36,7 @@ class App extends Component {
   // Makes a request to petfinder for a list of breeds on specified animal
     getBreedList = () => {
       console.log(this)
-      return jpp(`http://api.petfinder.com/breed.list?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${this.state.searchData.animal}`)
+      return jpp(`http://api.petfinder.com/breed.list?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${this.state.SearchData.animal}`)
         .then(res => {
           console.log(res)
           let rawBreeds = get(res, 'petfinder.breeds.breed', null);
@@ -49,11 +50,11 @@ class App extends Component {
 
   // Makes a request to petfinder using the api method pet.find to get an array of pets that match the arguments chosen from the search form
       getSearchPet = () => {
-      let formData = this.state.searchData
+      let formData = this.state.SearchData
       let { animal, breed, size, sex, location, age } = formData
       return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&breed=${breed}&size=${size}&sex=${sex}&location=${location}&age=${age}`)
         .then(res => res.petfinder.pets.pet.map(this.formatPetResponse))
-        .then(res => console.log(res))
+        .then(res => this.setSearchResult(res))
     }
 
     // A request to petfinder using pet.find to get a random cat for the featured pet component
@@ -107,11 +108,17 @@ class App extends Component {
     setSearchData = (e, value, cb) => {
       e.preventDefault();
       this.setState({
-        searchData: {
-          ...this.state.searchData,
+        SearchData: {
+          ...this.state.SearchData,
           [value]: e.target.value
         }
       }, cb);
+    }
+
+    setSearchResult(searchResult) {
+      this.setState({
+        searchResult: searchResult
+      })
     }
 
   // FORMATTING RESPONSE ********************************
@@ -169,7 +176,7 @@ class App extends Component {
   // Renders the main components of app
     render() {
 
-      if(this.state.pet === "-") {
+      if(this.state.searchResult.length === 0) {
         return (
           <div className="App">
 
@@ -185,8 +192,8 @@ class App extends Component {
       } else {
         return (
           <div className="App">
-            <PetCard 
-            pet={ this.state.pet } />
+            { this.state.searchResult.map((result, i) => <PetCard key={ i } pet={ result } />) }
+            
             
           </div>
         )
