@@ -8,7 +8,7 @@ export default (props) => {
 					<div className="pet-card-wrap">
 						<div className="pet-card">
 							<span className="pet-name-header">
-								<h1 className="pet-name">{props.pet.name}</h1>
+								<h2 className="pet-name">{props.pet.name}</h2>
 							</span>
 							<div className="card-img">
 								<img src={props.pet.picture}

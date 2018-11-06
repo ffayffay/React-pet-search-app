@@ -3,9 +3,11 @@ import PetCardInfo from './Pet-card-info.js';
 
 export default (props) => {
 	return (
+		<div className="pet-card-container">
 			<div className="pet-card">
 				<PetCardInfo pet={props.pet} />
    			</div>
+		</div>
 		)
 }
 

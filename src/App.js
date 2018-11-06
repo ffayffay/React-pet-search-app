@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import jpp from './Components/JSONPromise.js';
 import SearchForm from './Components/Search-form.js';
 import PetCard from './Components/Pet-card.js';
-import Welcome from './Components/Welcome.js';
+import Header from './Components/Header.js';
 
 class App extends Component {
   constructor() {
@@ -52,7 +52,7 @@ class App extends Component {
       getSearchPet = () => {
       let formData = this.state.SearchData
       let { animal, breed, size, sex, location, age } = formData
-      return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&breed=${breed}&size=${size}&sex=${sex}&location=${location}&age=${age}`)
+      return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&breed=${breed}&size=${size}&sex=${sex}&location=${location}&age=${age}&count=10`)
         .then(res => res.petfinder.pets.pet.map(this.formatPetResponse))
         .then(res => this.setSearchResult(res))
     }
@@ -180,21 +180,24 @@ class App extends Component {
         return (
           <div className="App">
 
-            <SearchForm
-           breeds={ this.state.breeds }
-           formData={ this.formData }
-           setSearchData={ this.setSearchData } 
-           getBreedList={ this.getBreedList } 
-           getSearchPet={ this.getSearchPet.bind(this) }/>
+            <div className="main-content-container">
+              <SearchForm
+             breeds={ this.state.breeds }
+             formData={ this.formData }
+             setSearchData={ this.setSearchData } 
+             getBreedList={ this.getBreedList } 
+             getSearchPet={ this.getSearchPet.bind(this) }/>
+             </div>
 
            </div>
          )
       } else {
         return (
           <div className="App">
-            { this.state.searchResult.map((result, i) => <PetCard key={ i } pet={ result } />) }
-            
-            
+            <Header />
+            <div className="main-content-container">
+              { this.state.searchResult.map((result, i) => <PetCard key={ i } pet={ result } />) }
+            </div>
           </div>
         )
       }
