@@ -3,9 +3,13 @@ import './App.css';
 import { get } from 'lodash';
 
 import jpp from './Components/JSONPromise.js';
-import SearchForm from './Components/Search-form.js';
+import FeaturedPet from './Components/Featured-pet.js';
+import SearchFormAnimalType from './Components/Search-form-Animal-type.js';
+import SearchFormBreed from './Components/Search-form-Breed.js';
+import SearchFormLocation from './Components/Search-form-Location.js';
 import PetCard from './Components/Pet-card.js';
 import Header from './Components/Header.js';
+import buildUrl from './Components/BUILDurl.js';
 
 class App extends Component {
   constructor() {
@@ -21,10 +25,7 @@ class App extends Component {
         SearchData: {
           animal: "dog",
           breed: "Yorkshire Terrier",
-          size: "M",
-          sex: "M",
           location: "47130",
-          age: "Baby"
         }
       }
 
@@ -36,7 +37,15 @@ class App extends Component {
   // Makes a request to petfinder for a list of breeds on specified animal
     getBreedList = () => {
       console.log(this)
-      return jpp(`http://api.petfinder.com/breed.list?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${this.state.SearchData.animal}`)
+        let animal = this.state.SearchData.animal
+      // return jpp(`http://api.petfinder.com/breed.list?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${this.state.SearchData.animal}`)
+        let urlOptions = {
+          method: 'breed.list',
+          args: {
+            animal: this.state.SearchData.animal 
+          }
+        }
+        return jpp(buildUrl(urlOptions))
         .then(res => {
           console.log(res)
           let rawBreeds = get(res, 'petfinder.breeds.breed', null);
@@ -48,18 +57,33 @@ class App extends Component {
         })
     }
 
+
+
   // Makes a request to petfinder using the api method pet.find to get an array of pets that match the arguments chosen from the search form
       getSearchPet = () => {
       let formData = this.state.SearchData
-      let { animal, breed, size, sex, location, age } = formData
-      return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&breed=${breed}&size=${size}&sex=${sex}&location=${location}&age=${age}&count=10`)
+      // let { animal, breed, location } = formData
+      // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&${breed=breed}&location=${location}&count=10`)
+      let urlOptions = {
+        method: 'pet.find',
+        args: formData
+      }
+      return jpp(buildUrl(urlOptions))
         .then(res => res.petfinder.pets.pet.map(this.formatPetResponse))
         .then(res => this.setSearchResult(res))
     }
 
     // A request to petfinder using pet.find to get a random cat for the featured pet component
     getCatFeatPet() {
-      return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=cat&location=47130`)
+      // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=cat&location=47130`)
+      let urlOptions = {
+        method: 'pet.find',
+        args: {
+          animal: 'cat',
+          location: '40208'
+        }
+      }
+      return jpp(buildUrl(urlOptions))
         .then(res => {
           let cats = res.petfinder.pets.pet
           let randomIndex = Math.floor(Math.random() * cats.length)
@@ -72,7 +96,15 @@ class App extends Component {
       
   // A request to petfinder using pet.find to get a random dog for the featured pet component
     getDogFeatPet() {
-      return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=dog&location=47130`)
+      // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=dog&location=47130`)
+        let urlOptions = {
+          method: 'pet.find',
+          args: {
+            animal: 'dog',
+            location: '40208'
+          }
+        }
+        return jpp(buildUrl(urlOptions))
         .then(res => {
           let dogs = res.petfinder.pets.pet
           let randomIndex = Math.floor(Math.random() * dogs.length)
@@ -171,6 +203,12 @@ class App extends Component {
   }
   // FORMATTING RESPONSE END *****************************
 
+  // Makes the request for getPet, getCatFeatPet, and getDogFeatPet when the component mounts
+  componentDidMount() {
+    this.getCatFeatPet()
+    this.getDogFeatPet()
+  }
+
   // ***** RENDER *******************************************
 
   // Renders the main components of app
@@ -180,13 +218,23 @@ class App extends Component {
         return (
           <div className="App">
 
+            <FeaturedPet 
+              randomCat={ this.state.randomCat }
+              randomDog={ this.state.randomDog } />
+
             <div className="main-content-container">
-              <SearchForm
-             breeds={ this.state.breeds }
-             formData={ this.formData }
-             setSearchData={ this.setSearchData } 
-             getBreedList={ this.getBreedList } 
-             getSearchPet={ this.getSearchPet.bind(this) }/>
+              <SearchFormAnimalType
+              getBreedList={ this.getBreedList }
+              setSearchData={ this.setSearchData } />
+
+              <SearchFormBreed
+              breeds={ this.state.breeds }
+              setSearchData={ this.setSearchData } />
+
+              <SearchFormLocation
+              setSearchData={ this.setSearchData }
+              getSearchPet={ this.getSearchPet.bind(this) } />
+
              </div>
 
            </div>
