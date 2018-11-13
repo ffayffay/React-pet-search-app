@@ -10,10 +10,11 @@ export default (props) => {
 				} }>
 				<label>Enter Zip Code</label>
 				<input type="text" name="location" value={props.value} onChange={(e) => props.setSearchData(e, "location")}/>
-			
-				<button>Previous</button>
-				<button>Submit</button>
-			</form>	
+				<div className="button-wrap">
+					<button>Submit</button>
+				</div>
+			</form>
+	
 		</div>
 	)
 }

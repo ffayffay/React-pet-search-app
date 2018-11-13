@@ -11,13 +11,12 @@ export default (props) => {
 					<h1>Welcome!</h1>
 				</div>
 				
-				<div className="pet-card-wrap">
-
-					<div className="feat-pet-banner">
-						<h2>Featured Pets</h2>
-					</div>
+				<div className="feat-pet-banner">
+					<h2>Featured Pets</h2>
+				</div>
+				<div className="feat-pet-card-wrap">
 				
-					<div className="pet-card cat-card">
+					<div className="cat-card">
 						<div className="card-img">
 							<img src={props.randomCat.picture}
 								 alt="Cat" />
@@ -30,7 +29,7 @@ export default (props) => {
 						</h3>*/}
 					</div>
 
-					<div className="pet-card dog-card">
+					<div className="dog-card">
 						<div className="card-img">
 							<img src={props.randomDog.picture}
 								 alt="Dog" />
@@ -43,7 +42,10 @@ export default (props) => {
 						</h3>*/}
 					</div>
 
+				</div>
 
+				<div className="button-wrap">
+					<button className="start-search-btn">Start Search</button>
 				</div>
 			</div>
 		</div>)

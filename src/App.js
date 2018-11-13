@@ -4,6 +4,7 @@ import { get } from 'lodash';
 
 import jpp from './Components/JSONPromise.js';
 import FeaturedPet from './Components/Featured-pet.js';
+import NoPetAvailable from './Components/No-pet-available.js';
 import SearchFormAnimalType from './Components/Search-form-Animal-type.js';
 import SearchFormBreed from './Components/Search-form-Breed.js';
 import SearchFormLocation from './Components/Search-form-Location.js';
@@ -66,7 +67,10 @@ class App extends Component {
       // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=${animal}&${breed=breed}&location=${location}&count=10`)
       let urlOptions = {
         method: 'pet.find',
-        args: formData
+        args: { 
+          ...formData, 
+          count: 10 
+        }
       }
       return jpp(buildUrl(urlOptions))
         .then(res => res.petfinder.pets.pet.map(this.formatPetResponse))
@@ -77,20 +81,24 @@ class App extends Component {
     getCatFeatPet() {
       // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=cat&location=47130`)
       let urlOptions = {
-        method: 'pet.find',
+        method: 'pet.getRandom',
         args: {
           animal: 'cat',
-          location: '40208'
+          output: 'basic'
         }
       }
       return jpp(buildUrl(urlOptions))
         .then(res => {
-          let cats = res.petfinder.pets.pet
-          let randomIndex = Math.floor(Math.random() * cats.length)
-          let randomCat = cats[randomIndex]
-
+          let randomCat = res.petfinder.pet
           this.setFeaturedCat(this.formatPetResponse(randomCat))
         })
+        // .then(res => {
+        //   let cats = res.petfinder.pets.pet
+        //   let randomIndex = Math.floor(Math.random() * cats.length)
+        //   let randomCat = cats[randomIndex]
+
+        //   this.setFeaturedCat(this.formatPetResponse(randomCat))
+        // })
         
     }
       
@@ -98,20 +106,24 @@ class App extends Component {
     getDogFeatPet() {
       // return jpp(`http://api.petfinder.com/pet.find?format=json&key=30813f445b233300ac28d89179cd71c7&animal=dog&location=47130`)
         let urlOptions = {
-          method: 'pet.find',
+          method: 'pet.getRandom',
           args: {
             animal: 'dog',
-            location: '40208'
+            output: 'basic'
           }
         }
         return jpp(buildUrl(urlOptions))
         .then(res => {
-          let dogs = res.petfinder.pets.pet
-          let randomIndex = Math.floor(Math.random() * dogs.length)
-          let randomDog = dogs[randomIndex]
-
+          let randomDog = res.petfinder.pet
           this.setFeaturedDog(this.formatPetResponse(randomDog))
         })
+        // .then(res => {
+        //   let dogs = res.petfinder.pets.pet
+        //   let randomIndex = Math.floor(Math.random() * dogs.length)
+        //   let randomDog = dogs[randomIndex]
+
+        //   this.setFeaturedDog(this.formatPetResponse(randomDog))
+        // })
         
     }
   // AJAX REQUEST END **********************************
@@ -221,6 +233,8 @@ class App extends Component {
             <FeaturedPet 
               randomCat={ this.state.randomCat }
               randomDog={ this.state.randomDog } />
+
+            <NoPetAvailable />
 
             <div className="main-content-container">
               <SearchFormAnimalType

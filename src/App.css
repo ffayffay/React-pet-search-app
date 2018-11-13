@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'KoHo', sans-serif;
 }
 
 /*^^^^^^^^^^^ FORM ^^^^^^^^^^^^^^^^^^^^^^*/
@@ -20,7 +21,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'KoHo', sans-serif;
   font-weight: bold;
   background-color: #cfdad4;
   border-bottom: 2px solid white;
@@ -63,7 +63,8 @@ a{
   padding: 9px;
   margin: 5px;
   border-radius: 5px;
-
+  height: 10%;
+  align-self: flex-end;
 }
 
 /*^^^^^^^^^^ MAIN CONTENT/PET CARD ^^^^^^^^^^^^*/
@@ -115,30 +116,67 @@ img {
 
 .feat-pet-content-wrap {
   flex-direction: column;
+  justify-content: space-around;
+}
+
+.feat-pet-banner h2 {
+    position: relative;
+    bottom: -60px;
+}
+
+.feat-pet-card-wrap {
+  height: 185px;
+  background: #193242;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 5px 10px 8px #888888;
 }
 
 .cat-card,
 .dog-card {
-  height: 200px;
-  width: 200px;
+  width: 40vw;
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background: #dad8dc;
-  border-radius: 20px;
+  justify-content: center;
   flex-direction: column;
-  box-shadow: 5px 10px 8px #888888;
 }
 
 .fp-name-header {
   font-size: 10px;
   font-weight: bold;
+  color: #ebebeb
 }
 
+
+/*^^^^^^^^^^^^^^ NO-PET-AVAILABLE ^^^^^^^^^^^^^^^^^^^^*/
+
+.empty-card-img {
+  width: 300px;
+}
+
+.empty-card-info {
+  flex-direction: column;
+}
 
 
 /*^^^^^^^^^^^^^^ MEDIA QUERIES ^^^^^^^^^^^^^^^^^^^^*/
 
+@media (max-width: 325px) {
+  .cat-card,
+  .dog-card {
+    height: auto;
+  }
+}
+
 @media (min-width: 767px) {
+  /*.App {
+    font-size: 15px;
+  }*/
+
+  .button-wrap button {
+    padding: 15px;
+  }
+
   header {
     flex-direction: row;
     justify-content: space-between;
@@ -149,5 +187,43 @@ img {
     padding-left: 3%;
     margin: 0;
     align-self: center;
+  }
+
+  .welcome h1 {
+    font-size: 60px;
+  }
+
+  .feat-pet-banner h2 {
+    font-size: 45px;
+  }
+
+  .feat-pet-card-wrap {
+    width: 70vw;
+    height: 30vh;
+  }
+
+  .card-img {
+    height: 200px;
+    width: 200px;
+  }
+
+  .empty-card-img {
+    width: 500px;
+  }
+}
+
+@media (min-width: 850px) {
+  .feat-pet-card-wrap {
+    height: 50vh;
+  }
+
+  .pet-card {
+  height: 350px;
+  width: 300px;
+  }
+
+  .feat-pet-banner h2 {
+    position: relative;
+    bottom: -40px;
   }
 }

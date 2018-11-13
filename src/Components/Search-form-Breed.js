@@ -12,10 +12,11 @@ export default (props) => {
 	// The map() method is used on the breeds array to create an options element for each breed type in the array							
 					}
 				</select>
-
-				<button>Previous</button>
-				<button>Next</button>
 			</form>
+
+			<div className="button-wrap">
+				<button>Next</button>
+			</div>
 		</div>
 	)
 }

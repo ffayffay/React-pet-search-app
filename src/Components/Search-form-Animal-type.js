@@ -18,9 +18,11 @@ export default (props) => {
 					<option value="horse">Horse</option>
 					<option value="barnyard">Barnyard</option>
 				</select>
-
-				<button>Next</button>
 			</form>
+
+			<div className="button-wrap">
+				<button>Next</button>
+			</div>
 		</div>
 	)
 }
