@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default (props) => {
 	return (
@@ -21,7 +22,9 @@ export default (props) => {
 			</form>
 
 			<div className="button-wrap">
-				<button>Next</button>
+				<Link to="/searchbreed">
+					<button>Next</button>
+				</Link>
 			</div>
 		</div>
 	)

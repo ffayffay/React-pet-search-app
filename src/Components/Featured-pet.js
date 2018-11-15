@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default (props) => {
 
@@ -45,7 +46,9 @@ export default (props) => {
 				</div>
 
 				<div className="button-wrap">
-					<button className="start-search-btn">Start Search</button>
+					<Link to="/searchanimaltype">
+						<button className="start-search-btn">Start Search</button>
+					</Link>
 				</div>
 			</div>
 		</div>)

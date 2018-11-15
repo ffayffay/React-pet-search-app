@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import { get } from 'lodash';
 
@@ -224,34 +225,63 @@ class App extends Component {
   // ***** RENDER *******************************************
 
   // Renders the main components of app
-    render() {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Route exact path="/" render={() => <FeaturedPet
+                                          randomCat={ this.state.randomCat }
+                                          randomDog={ this.state.randomDog } />} />
+          <Route path="/searchanimaltype" render={() => <SearchFormAnimalType
+                                                         getBreedList={ this.getBreedList }
+                                                         setSearchData={ this.setSearchData }  />} />
+          <Route path="/searchbreed" render={() => <SearchFormBreed
+                                                      breeds={ this.state.breeds }
+                                                      setSearchData={ this.setSearchData } />} />
+          <Route path="/searchlocation" render={(props) => <SearchFormLocation { ...props }
+                                                      setSearchData={ this.setSearchData }
+                                                      getSearchPet={ this.getSearchPet.bind(this) } />} />
+          <Route path="/pet" render={() => <div className="main-content-container">{ this.state.searchResult.map((result, i) => <PetCard
+                                                                                          key={ i }
+                                                                                          pet={ result } />) }</div> }/>
+          <Route path="/nopetavailable" render={() => <NoPetAvailable />} />
 
-      if(this.state.searchResult.length === 0) {
+        </div>
+      </Router>
+    )
+  }
+}
+
+export default App;
+
+     {/* if(this.state.searchResult.length === 0) {
         return (
-          <div className="App">
+          <BrowserRouter>
+            <div className="App">
 
-            <FeaturedPet 
-              randomCat={ this.state.randomCat }
-              randomDog={ this.state.randomDog } />
+              <FeaturedPet 
+                randomCat={ this.state.randomCat }
+                randomDog={ this.state.randomDog } />
 
-            <NoPetAvailable />
+              <NoPetAvailable />
 
-            <div className="main-content-container">
-              <SearchFormAnimalType
-              getBreedList={ this.getBreedList }
-              setSearchData={ this.setSearchData } />
+              <div className="main-content-container">
+                <SearchFormAnimalType
+                getBreedList={ this.getBreedList }
+                setSearchData={ this.setSearchData } />
 
-              <SearchFormBreed
-              breeds={ this.state.breeds }
-              setSearchData={ this.setSearchData } />
+                <SearchFormBreed
+                breeds={ this.state.breeds }
+                setSearchData={ this.setSearchData } />
 
-              <SearchFormLocation
-              setSearchData={ this.setSearchData }
-              getSearchPet={ this.getSearchPet.bind(this) } />
+                <SearchFormLocation
+                setSearchData={ this.setSearchData }
+                getSearchPet={ this.getSearchPet.bind(this) } />
+
+               </div>
 
              </div>
-
-           </div>
+           </BrowserRouter>
          )
       } else {
         return (
@@ -264,8 +294,5 @@ class App extends Component {
         )
       }
       
-    }
-  }
-
-
-export default App;
+    } */}
+  

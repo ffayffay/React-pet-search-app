@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default (props) => {
 	return (
@@ -11,7 +12,9 @@ export default (props) => {
 			<p>Try a new search</p>
 
 			<div className="button-wrap">
-				<button>Back to Search</button>
+				<Link exact to="/">
+					<button>Back to Search</button>
+				</Link>
 			</div>
 		</div>
 	)

@@ -1,6 +1,8 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default (props) => {
+	console.log(props)
 	return (
 		<div className="search-form-item">
 			<form>
@@ -15,7 +17,9 @@ export default (props) => {
 			</form>
 
 			<div className="button-wrap">
-				<button>Next</button>
+				<Link to="/searchlocation">
+					<button>Next</button>
+				</Link>
 			</div>
 		</div>
 	)
