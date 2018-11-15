@@ -1,5 +1,5 @@
 function buildUrl(urlOptions) {
-	const baseUrl = "http://api.petfinder.com/";
+	const baseUrl = "https://api.petfinder.com/";
 	const key = "key=30813f445b233300ac28d89179cd71c7";
 	const args = formatArgs(urlOptions.args);
 	const method = urlOptions.method

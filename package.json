@@ -1,6 +1,6 @@
 {
   "name": "pet-search-app",
-  "homepage" : "http://ffayffay.github.io/React-pet-search-app",
+  "homepage" : "http://ffayffay.github.io/React-pet-search-app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
