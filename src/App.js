@@ -229,22 +229,23 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Route exact path="/React-pet-search-app" render={() => <FeaturedPet
+          <Header />
+          <Route exact path="/" render={() => <FeaturedPet
                                           randomCat={ this.state.randomCat }
                                           randomDog={ this.state.randomDog } />} />
-          <Route path="React-pet-search-app/searchanimaltype" render={() => <SearchFormAnimalType
+          <Route path="/searchanimaltype" render={() => <SearchFormAnimalType
                                                          getBreedList={ this.getBreedList }
                                                          setSearchData={ this.setSearchData }  />} />
-          <Route path="React-pet-search-app/searchbreed" render={() => <SearchFormBreed
+          <Route path="/searchbreed" render={() => <SearchFormBreed
                                                       breeds={ this.state.breeds }
                                                       setSearchData={ this.setSearchData } />} />
-          <Route path="React-pet-search-app/searchlocation" render={(props) => <SearchFormLocation { ...props }
+          <Route path="/searchlocation" render={(props) => <SearchFormLocation { ...props }
                                                       setSearchData={ this.setSearchData }
                                                       getSearchPet={ this.getSearchPet.bind(this) } />} />
-          <Route path="React-pet-search-app/pet" render={() => <div className="main-content-container">{ this.state.searchResult.map((result, i) => <PetCard
+          <Route path="/pet" render={() => <div className="main-content-container">{ this.state.searchResult.map((result, i) => <PetCard
                                                                                           key={ i }
                                                                                           pet={ result } />) }</div> }/>
-          <Route path="React-pet-search-app/nopetavailable" render={() => <NoPetAvailable />} />
+          <Route path="/nopetavailable" render={() => <NoPetAvailable />} />
 
         </div>
       </Router>
